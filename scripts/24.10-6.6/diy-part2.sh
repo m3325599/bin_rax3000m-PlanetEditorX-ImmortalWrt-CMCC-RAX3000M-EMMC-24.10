@@ -26,6 +26,11 @@ echo "CONFIG_PACKAGE_luci-app-openclash=y" >> .config
 # 微信推送
 echo "CONFIG_PACKAGE_luci-app-wechatpush=y" >> .config
 echo "CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y" >> .config
+# WDS支持
+echo "CONFIG_PACKAGE_luci-app-wireless=y" >> .config
+echo "CONFIG_PACKAGE_luci-i18n-wireless-zh-cn=y" >> .config
+echo "CONFIG_PACKAGE_wpa-supplicant-wds=y" >> .config
+echo "CONFIG_PACKAGE_hostapd-wds=y" >> .config
 
 # 删除 package/mtk/drivers/mt_wifi/files/mt7981-default-eeprom/e2p
 rm -f package/mtk/drivers/mt_wifi/files/mt7981-default-eeprom/e2p
