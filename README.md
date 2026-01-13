@@ -6,6 +6,8 @@
 - **支持的设备**：`cmcc_rax3000m-emmc`
 - **自动编译**：每天（北京时间 00:00）检查源仓库更新，若有新提交，自动为 CMCC RAX3000M EMMC 机型编译固件。
 - **5G 25dB 增强**：支持启用 5G 高功率模式（默认启用，定时编译时固定启用，手动编译可选）。
+- **WDS无线桥接**：支持2.4GHz和5GHz频段的WDS无线桥接功能。
+- **完整WiFi支持**：包含所有可用WiFi信道和多种WiFi模式（AP、Client、WDS、Ad-Hoc、Monitor）。
 - **固件上传**：上传 `sysupgrade.bin` 文件到 GitHub Release。
 - **清理机制**：保留最近 30 个 GitHub Release 和 30 次工作流运行，自动删除旧记录以节省空间。
 
