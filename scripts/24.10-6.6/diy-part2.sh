@@ -26,12 +26,15 @@ echo "CONFIG_PACKAGE_luci-app-openclash=y" >> .config
 # 微信推送
 echo "CONFIG_PACKAGE_luci-app-wechatpush=y" >> .config
 echo "CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y" >> .config
-# 基础无线支持
+# 基础无线支持（包含WDS所需的完整包）
+echo "CONFIG_PACKAGE_wpad=y" >> .config
+echo "CONFIG_PACKAGE_wpad-openssl=y" >> .config
 echo "CONFIG_PACKAGE_wpa-supplicant=y" >> .config
 echo "CONFIG_PACKAGE_wpa-supplicant-wds=y" >> .config
 echo "CONFIG_PACKAGE_hostapd=y" >> .config
 echo "CONFIG_PACKAGE_hostapd-wds=y" >> .config
 echo "CONFIG_PACKAGE_wpa-cli=y" >> .config
+echo "CONFIG_PACKAGE_libustream-openssl=y" >> .config
 
 # LuCI无线配置界面
 echo "CONFIG_PACKAGE_luci-app-wireless=y" >> .config
