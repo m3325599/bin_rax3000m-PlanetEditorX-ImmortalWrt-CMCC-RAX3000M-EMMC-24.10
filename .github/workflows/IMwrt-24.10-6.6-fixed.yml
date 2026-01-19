@@ -253,6 +253,8 @@ jobs:
           echo "export PATH=/usr/lib/ccache:$PATH" >> $GITHUB_ENV
           echo "export CCACHE_DIR=$HOME/.ccache" >> $GITHUB_ENV
           ccache -M 5G
+          # 清除旧的ccache缓存，确保重新编译
+          ccache -c
 
       - name: 清理磁盘空间(Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -340,6 +342,8 @@ jobs:
         run: |
           cd openwrt
           ./scripts/feeds update -a || { echo "更新 Feeds 失败"; exit 1; }
+          # 强制重新安装无线相关的包
+          ./scripts/feeds install -d y -a wpad wpad-openssl wpa-supplicant wpa-supplicant-wds hostapd hostapd-wds
           ./scripts/feeds install -a || { echo "安装 Feeds 失败"; exit 1; }
 
       - name: 安装iStore商店
@@ -360,9 +364,21 @@ jobs:
           pwd
           ls -la
           cd openwrt
+          # 清除旧配置
+          rm -f .config
+          # 重新应用基础配置
+          cp $GITHUB_WORKSPACE/config/$CONFIG_FILE .config
+          echo "CONFIG_TARGET_mediatek_filogic_DEVICE_${{ matrix.device_model }}=y" >> .config
+          # 执行DIY脚本
           $GITHUB_WORKSPACE/$DIY_P2_SH
+          # 验证WDS配置是否生效
+          echo "=== 验证WDS相关配置 ==="
+          grep -E "wds|WDS|hostapd|wpa-supplicant" .config
+          # 生成最终配置
           make defconfig
-          # cat .config
+          # 再次验证最终配置
+          echo "=== 验证最终配置中的WDS支持 ==="
+          grep -E "wds|WDS" .config
           cp .config upload.config
           # cat /etc/docker/daemon.json
           ls -la
